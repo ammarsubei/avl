@@ -15,6 +15,7 @@ template<typename T>
 class Node
 {
   public:
+    // For later use
     typedef std::unique_ptr< Node<T> > NodePtr;
 
     /**
@@ -52,13 +53,13 @@ class Node
      *  @brief Setter of left child node
      *  @param NodePtr left node
      */
-    void setLeft(const NodePtr& node)   { left = std::move(node); }
+    //void setLeft(NodePtr node)          { left = std::move(node); }
 
     /**
      *  @brief Setter of right child node
      *  @param NodePtr right node
      */
-    void setRight(const NodePtr& node)  { right = std::move(node); }
+    //void setRight(NodePtr node)         { right = std::move(node); }
 
     /**
      *  @brief Right rotation for balancing the tree
@@ -71,7 +72,7 @@ class Node
      *     A   B           B   C
      *
      */
-    NodePtr rightRotate();
+    Node* rightRotate();
 
     /**
      *  @brief Left rotation for balancing the tree
@@ -84,11 +85,11 @@ class Node
      *         B   C   A   B
      *
      */
-    NodePtr leftRotate();
+    Node* leftRotate();
 
   private:
-    T data;         ///< Node data
-    int height;     ///< Node height
-    NodePtr left;   ///< Left child
-    NodePtr right;  ///< Right child
+    T data;       ///< Node data
+    int height;   ///< Node height
+    Node *left;   ///< Left child
+    Node *right;  ///< Right child
 };

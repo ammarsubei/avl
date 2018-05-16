@@ -27,13 +27,13 @@ class AVL
      *  @brief Getter for current size of tree
      *  @return int size
      */
-    int getSize() const { return size; }
+    int getSize()             const { return size; }
 
     /**
      *  @brief Getter for current height of tree
      *  @return int height
      */
-    int getHeight() const { return root->getHeight(); }
+    int getHeight()           const { return root->getHeight(); }
 
     /**
      *  @brief Setter for current size of tree
@@ -42,7 +42,7 @@ class AVL
     void setSize(const int newSize) { size = newSize; }
 
     /**
-     *  @brief Recursively print tree nodes in pre-order
+     *  @brief Recursive inorder print
      */
     void print();
 
@@ -60,11 +60,11 @@ class AVL
 
   private:
     /**
-     *  @brief Helper function for recursive pre-order printing
+     *  @brief Helper function for inorder print
      */
-    void _print(std::unique_ptr< Node<T> >& node);
+    void _print(Node<T> *node);
 
   private:
-    std::unique_ptr< Node<T> > root;  ///< Root node
-    int size;                         ///< Size of tree
+    Node<T> *root; ///< Root node
+    int size;     ///< Size of tree
 };
