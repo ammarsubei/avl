@@ -1,3 +1,10 @@
+/**
+ *  @brief Node class definitions
+ *
+ *  @author Ammar Subei
+ */
+
+#include <string>
 
 #include "node.h"
 #include "util.h"
@@ -39,3 +46,8 @@ Node<T>* Node<T>::leftRotate()
   // Return new root of subtree
   return t;
 }
+
+template class Node<int>;
+template class Node<float>;
+template class Node<double>;
+template class Node<std::string>;

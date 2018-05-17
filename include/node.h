@@ -16,7 +16,7 @@ class Node
 {
   public:
     // For later use
-    typedef std::unique_ptr< Node<T> > NodePtr;
+    //typedef Node<T>* NodePtr;
 
     /**
      *  @brief Default constructor
@@ -25,41 +25,58 @@ class Node
     Node(T newData) : data(newData), height(0), left(nullptr), right(nullptr) {}
 
     /**
-     *  @brief Getter of node data
+     *  @brief Getter for node data
      *  @return T node data
      */
     T getData()                   const { return data; }
 
     /**
-     *  @brief Getter of node height
+     *  @brief Getter for node height
      *  @return int node height
      */
     int getHeight()               const { return height; }
 
     /**
-     *  @brief Setter of node data
+     *  @brief Getter for left child node
+     *  @return Node* left child
+     */
+    Node<T>* getLeft()            const { return left; }
+
+    /**
+     *  @brief Getter for right child node
+     *  @return Node* right child
+     */
+    Node<T>* getRight()           const { return right; }
+
+    /**
+     *  @brief Setter for node data
      *  @param int new data
      */
     void setData(const T newData)       { data = newData; }
 
     /**
-     *  @brief Setter of node height
+     *  @brief Setter for node height
      *  @param int new height
      */
     void setHeight(const int newHeight) { height = newHeight; }
 
-  private:
     /**
-     *  @brief Setter of left child node
-     *  @param NodePtr left node
+     *  @brief Setter for left child node
+     *  @param Node* left child
      */
-    //void setLeft(NodePtr node)          { left = std::move(node); }
+    void setLeft(Node<T> *newLeft)      { left = newLeft; }
 
     /**
-     *  @brief Setter of right child node
-     *  @param NodePtr right node
+     *  @brief Setter for right child node
+     *  @param Node* right child
      */
-    //void setRight(NodePtr node)         { right = std::move(node); }
+    void setRight(Node<T> *newRight)      { right = newRight; }
+
+    /**
+     *  @brief Checks if node is balanced
+     *  @return bool node is balanced
+     */
+    bool isBalanced() const;
 
     /**
      *  @brief Right rotation for balancing the tree
@@ -72,7 +89,7 @@ class Node
      *     A   B           B   C
      *
      */
-    Node* rightRotate();
+    Node<T>* rightRotate();
 
     /**
      *  @brief Left rotation for balancing the tree
@@ -85,11 +102,11 @@ class Node
      *         B   C   A   B
      *
      */
-    Node* leftRotate();
+    Node<T>* leftRotate();
 
   private:
-    T data;       ///< Node data
-    int height;   ///< Node height
-    Node *left;   ///< Left child
-    Node *right;  ///< Right child
+    T data;         ///< Node data
+    int height;     ///< Node height
+    Node<T> *left;  ///< Left child
+    Node<T> *right; ///< Right child
 };

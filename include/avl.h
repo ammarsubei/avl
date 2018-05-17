@@ -65,6 +65,6 @@ class AVL
     void _print(Node<T> *node);
 
   private:
-    Node<T> *root; ///< Root node
-    int size;     ///< Size of tree
+    Node<T> *root;  ///< Root node
+    int size;       ///< Size of tree
 };
