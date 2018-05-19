@@ -19,8 +19,11 @@ run:
 
 all: clean $(TARGET) run
 
+doxygen:
+	doxygen doxy.config
+
 clean:
 	@echo "Clenaing..."
-	$(RM) $(TARGET)
+	$(RM) -r $(TARGET) ./html ./latex
 
 .PHONY: clean
