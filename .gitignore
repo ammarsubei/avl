@@ -1,4 +1,4 @@
 avl
 *.zip
-./html
-./latex
+html/
+latex/
