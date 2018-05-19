@@ -4,24 +4,29 @@
  *  @author Ammar Subei
  */
 
-#include <cmath>
 #include <vector>
 #include <string>
 #include <iostream>
 
 #include "avl.h"
 #include "node.h"
-#include "util.h"
 
 template<typename T> 
 void AVL<T>::_print(Node<T> *node)
 {
+  if (node) {
+    _print(node->getLeft());
+    std::cout << node->getData() << " ";
+    _print(node->getRight());
+  }
 }
 
 template<typename T> 
 void AVL<T>::print()
 {
-  std::cout << "root: " << root->getData() << std::endl;
+  std::cout << "Printing AVL Tree In-Order:" << std::endl;
+  _print(root);
+  std::cout << std::endl;
 }
 
 template<typename T> 
@@ -69,28 +74,17 @@ void AVL<T>::add(T item)
   // If height of a node doesn't change, then tree is balanced
   // If AVL condidtion is broken, raise unbalanced flag
   Node<T> *temp;
-  bool unbalanced = false;
+  bool balanced = true;
 
-  while ( !nodesTraverse.empty() ) {
+  while ( !nodesTraverse.empty() && balanced ) {
     temp = nodesTraverse.back();
     nodesTraverse.pop_back();
 
-    const int heightLeft = temp->getLeft()->getHeight();
-    const int heightRight = temp->getRight()->getHeight();
-    const int newHeight = 1 + max(heightLeft, heightRight);
-
-    if ( std::abs(heightLeft - heightRight) > 1 ) {
-      unbalanced = true;
-      break;
-    } else if (temp->getHeight() == newHeight) {
-      break;
-    } else {
-      temp->setHeight(newHeight);
-    }
+    balanced = temp->updateHeight();
   }
 
   // Perform rotations to balance the tree
-  if (unbalanced) {
+  if (!balanced) {
     current = temp;
     
     if (nodesTraverse.empty()) {
@@ -99,16 +93,17 @@ void AVL<T>::add(T item)
       previous = nodesTraverse.back();
     }
 
+    // Tree is left heavy (case 1 & 2)
     if (newNode->getData() < current->getData()) {
-      // Case 1 or 2
       Node<T> *L = current->getLeft();
 
+      // Tree's left subtree is right heavy (case 2)
       if (newNode->getData() > L->getData()) {
-        // Case 2
+        // Perform left rotation @L
         current->setLeft( L->leftRotate() );
       }
 
-      // Cases 1 and 2
+      // Perform right rotation @current
       if (previous == nullptr) {
         root = current->rightRotate();
       } else if (previous->getLeft() == current) {
@@ -116,16 +111,16 @@ void AVL<T>::add(T item)
       } else {
         previous->setRight( current->rightRotate() );
       }
-    } else {
-      // Case 3 or 4
+    } else {  // Tree is right heavy (case 3 & 4)
       Node<T> *R = current->getRight();
 
+      // Tree's right subtree is left heavy (case 3)
       if (newNode->getData() < R->getData()) {
-        // Case 3
+        // Perform right rotation @R
         current->setRight( R->rightRotate() );
       }
 
-      // Cases 3 and 4
+      // Perform left rotation @current
       if (previous == nullptr) {
         root = current->leftRotate();
       } else if (previous->getLeft() == current) {

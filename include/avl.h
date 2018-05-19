@@ -1,5 +1,5 @@
 /**
- *  @brief AVL class header file
+ *  @file AVL class header file
  *
  *  @author Ammar Subei
  */
@@ -12,7 +12,42 @@
 template<typename T> class Node;
 
 /**
- *  @brief AVL class
+ *  @brief AVL class is a self-balancing binary search tree
+ *
+ *  There are four cases where a binary search tree needs balancing:
+ *
+ *  Case 1:
+ *  ```
+ *      C      B
+ *     /      / \
+ *    B  ==> A   C
+ *   /
+ *  A
+ *  ```
+ *  Case 2 (requires 2 rotations):
+ *  ```
+ *      C        C      B
+ *     /        /      / \
+ *    A  ==>   B  ==> A   C
+ *     \      /
+ *      B    A
+ *  ```
+ *  Case 3 (requires 2 rotations):
+ *  ```
+ *    A       A          B
+ *     \       \        / \
+ *      C ==>   B  ==> A   C
+ *     /         \
+ *    B           C
+ *  ```
+ *  Case 4:
+ *  ```
+ *  A          B
+ *   \        / \
+ *    B  ==> A   C
+ *     \
+ *      C
+ *  ```
  */
 template<typename T>
 class AVL
@@ -22,6 +57,11 @@ class AVL
      *  @brief Default constructor
      */
     AVL() : root(nullptr), size(0) {}
+
+    /**
+     *  @brief Destructor
+     */
+    ~AVL()                          { delete root; }
 
     /**
      *  @brief Getter for current size of tree

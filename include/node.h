@@ -1,5 +1,5 @@
 /**
- *  @brief Node class header file
+ *  @file Node class header file
  *
  *  @author Ammar Subei
  */
@@ -9,20 +9,22 @@
 #include <memory>
 
 /**
- *  @brief Node class
+ *  @brief Node class used for the AVL tree structure
  */
 template<typename T>
 class Node
 {
   public:
-    // For later use
-    //typedef Node<T>* NodePtr;
-
     /**
      *  @brief Default constructor
      *  @param T initial data
      */
     Node(T newData) : data(newData), height(0), left(nullptr), right(nullptr) {}
+
+    /**
+     *  @brief Destructor
+     */
+    ~Node();
 
     /**
      *  @brief Getter for node data
@@ -70,37 +72,45 @@ class Node
      *  @brief Setter for right child node
      *  @param Node* right child
      */
-    void setRight(Node<T> *newRight)      { right = newRight; }
+    void setRight(Node<T> *newRight)    { right = newRight; }
 
     /**
-     *  @brief Checks if node is balanced
+     *  @brief Updates height
+     *
+     *  Used after adding a new node to update heights and
+     *  check if AVL condition was broken.
+     *
      *  @return bool node is balanced
      */
-    bool isBalanced() const;
+    bool updateHeight();
 
     /**
      *  @brief Right rotation for balancing the tree
+     *
+     *  ```
+     *      C      B
+     *     /      / \
+     *    B  ==> A   C
+     *   /
+     *  A
+     *  ```
+     *
      *  @return NodePtr new subTree root
-     *
-     *         S           T
-     *        / \         / \
-     *       T   C  ==>  A   S
-     *      / \             / \
-     *     A   B           B   C
-     *
      */
     Node<T>* rightRotate();
 
     /**
      *  @brief Left rotation for balancing the tree
+     *
+     *  ```
+     *  A          B
+     *   \        / \
+     *    B  ==> A   C
+     *     \
+     *      C
+     *  ```
+     *
      *  @return NodePtr new subTree root
-     *
-     *         S           T
-     *        / \         / \
-     *       A   T  ==>  S   C
-     *          / \     / \
-     *         B   C   A   B
-     *
      */
     Node<T>* leftRotate();
 

@@ -4,25 +4,66 @@
  *  @author Ammar Subei
  */
 
+#include <cmath>
 #include <string>
+#include <iostream>
 
 #include "node.h"
 #include "util.h"
 
 template<typename T>
+Node<T>::~Node()
+{
+  if (left) delete left;
+  if (right) delete right;
+}
+
+template<typename T>
+bool Node<T>::updateHeight()
+{
+  // Tree balanced by default
+  bool balanced = true;
+
+  // Height of -1 represent nonexistent node
+  int heightLeft = -1;
+  int heightRight = -1;
+
+  // If child nodes exist, get their heights
+  if (getLeft()) {
+    heightLeft = getLeft()->getHeight();
+  }
+
+  if (getRight()) {
+    heightRight = getRight()->getHeight();
+  }
+
+  const int newHeight = 1 + max(heightLeft, heightRight);
+
+  if ( std::abs(heightLeft - heightRight) > 1 ) {
+    balanced = false;
+  } else if (getHeight() != newHeight) {
+    setHeight(newHeight);
+  }
+
+  return balanced;
+}
+
+template<typename T>
 Node<T>* Node<T>::rightRotate()
 {
   // Get the necessary nodes
-  Node<T> *t = this->left;
-  Node<T> *b = t->right;
+  Node<T> *t = getLeft();
+  Node<T> *b = t->getRight();
 
   // Rotate target T up, and source (this) down right
-  t->right = this;
-  this->left = b;
+  t->setRight(this);
+  setLeft(b);
 
   // Now adjust heights
-  this->setHeight( 1 + max( (this->left->getHeight()), (this->right->getHeight()) ) ); 
-  t->setHeight( 1 + max( (t->left->getHeight()), (t->right->getHeight()) ) ); 
+  updateHeight();
+  t->updateHeight();
+
+  std::cout << "ROTATED RIGHT" << std::endl;
 
   // Return new root of subtree
   return t;
@@ -32,16 +73,18 @@ template<typename T>
 Node<T>* Node<T>::leftRotate()
 {
   // Get the necessary nodes
-  Node<T> *t = this->right;
-  Node<T> *b = t->left;
+  Node<T> *t = getRight();
+  Node<T> *b = t->getLeft();
 
   // Rotate target t up, and source (this) down left
-  t->left = this;
-  this->right = b;
+  t->setLeft(this);
+  setRight(b);
 
   // Now adjust heights
-  this->setHeight( 1 + max( (this->left->getHeight()), (this->right->getHeight()) ) ); 
-  t->setHeight( 1 + max( (t->left->getHeight()), (t->right->getHeight()) ) ); 
+  updateHeight();
+  t->updateHeight();
+
+  std::cout << "ROTATED LEFT" << std::endl;
 
   // Return new root of subtree
   return t;
