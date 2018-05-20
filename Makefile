@@ -5,6 +5,7 @@ SRCEXT 	:= cpp
 HDREXT 	:= h
 SRCDIR 	:= ./src
 HDRDIR 	:= ./include
+DOXDIR 	:= ./doxy
 
 SOURCES := $(shell find $(SRCDIR) -type f -name "*.$(SRCEXT)")
 HEADERS := $(shell find $(HDRDIR) -type f -name "*.$(HDREXT)")
@@ -20,10 +21,10 @@ run:
 all: clean $(TARGET) run
 
 doxygen:
-	doxygen doxy.config
+	doxygen $(DOXDIR)/doxy.config
 
 clean:
 	@echo "Clenaing..."
-	$(RM) -r $(TARGET) ./html ./latex
+	$(RM) -r $(TARGET) $(DOXDIR)/html
 
 .PHONY: clean
