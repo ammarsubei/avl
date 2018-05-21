@@ -1,4 +1,3 @@
 avl
 *.zip
-html/
-latex/
+doxy/html/
