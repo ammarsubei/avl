@@ -14,6 +14,7 @@ int main()
   test.add(6);
   test.print();
 
+  std::cout << "tree size: " << test.getSize() << std::endl;
   std::cout << "tree height: " << test.getHeight() << std::endl;
 
   return 0;

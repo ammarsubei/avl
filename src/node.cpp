@@ -63,8 +63,6 @@ Node<T>* Node<T>::rightRotate()
   updateHeight();
   t->updateHeight();
 
-  std::cout << "ROTATED RIGHT" << std::endl;
-
   // Return new root of subtree
   return t;
 }
@@ -83,8 +81,6 @@ Node<T>* Node<T>::leftRotate()
   // Now adjust heights
   updateHeight();
   t->updateHeight();
-
-  std::cout << "ROTATED LEFT" << std::endl;
 
   // Return new root of subtree
   return t;

@@ -61,25 +61,19 @@ class AVL
     /**
      *  @brief Destructor
      */
-    ~AVL()                          { delete root; }
+    ~AVL()                { if (root) delete root; }
 
     /**
      *  @brief Getter for current size of tree
      *  @return int size
      */
-    int getSize()             const { return size; }
+    int getSize()   const { return size; }
 
     /**
      *  @brief Getter for current height of tree
      *  @return int height
      */
-    int getHeight()           const { return root->getHeight(); }
-
-    /**
-     *  @brief Setter for current size of tree
-     *  @param int size
-     */
-    void setSize(const int newSize) { size = newSize; }
+    int getHeight() const { return root->getHeight(); }
 
     /**
      *  @brief Recursive inorder print

@@ -36,9 +36,9 @@ void AVL<T>::add(T item)
   Node<T> *current = root;
 
   // Figure out where item should be added
-  std::vector< Node<T>* > nodesTraverse;
+  std::vector< Node<T>* > nodesTraversed;
   while (current) {
-    nodesTraverse.push_back(current);
+    nodesTraversed.push_back(current);
 
     // Gotta check if item already exists
     if (current->getData() == item) {
@@ -58,7 +58,7 @@ void AVL<T>::add(T item)
   if (!previous) {
     // Tree was empty, set root
     root = newNode;
-    setSize( getSize() + 1 );
+    size = getSize() + 1;
     return;
   } else if (previous->getData() < newNode->getData()) {
     // New item is larger
@@ -68,7 +68,7 @@ void AVL<T>::add(T item)
     previous->setLeft(newNode);
   }
 
-  setSize( getSize() + 1 );
+  size = getSize() + 1;
 
   // Walk back up the tree and update heights when necessary
   // If height of a node doesn't change, then tree is balanced
@@ -76,21 +76,27 @@ void AVL<T>::add(T item)
   Node<T> *temp;
   bool balanced = true;
 
-  while ( !nodesTraverse.empty() && balanced ) {
-    temp = nodesTraverse.back();
-    nodesTraverse.pop_back();
+  while ( !nodesTraversed.empty() && balanced ) {
+    temp = nodesTraversed.back();
+    nodesTraversed.pop_back();
 
+    const int oldHeight = temp->getHeight();
     balanced = temp->updateHeight();
+
+    // Height of node didn't change, we're done here
+    if (oldHeight == temp->getHeight()) {
+      return;
+    }
   }
 
   // Perform rotations to balance the tree
   if (!balanced) {
     current = temp;
     
-    if (nodesTraverse.empty()) {
+    if (nodesTraversed.empty()) {
       previous = nullptr;
     } else {
-      previous = nodesTraverse.back();
+      previous = nodesTraversed.back();
     }
 
     // Tree is left heavy (case 1 & 2)
@@ -132,10 +138,33 @@ void AVL<T>::add(T item)
   }
 }
 
-// TODO
 template<typename T> 
 void AVL<T>::remove(T item)
 {
+  Node<T> *current = root;
+
+  std::vector< Node<T>* > nodesTraversed;
+  while (current) {
+    nodesTraversed.push_back(current);
+
+    if (current->getData() == item) {
+      break;
+    } else if (current->getData() < item) {
+      current = current->getRight();
+    } else {
+      current = current->getLeft();
+    }
+  }
+
+  // Return if item wasn't found
+  if (!current) {
+    return;
+  }
+
+  // TODO: Current node should be removed
+  // Make sure to preserve node children
+
+  // TODO: Rebalance tree as needed
 }
 
 template class AVL<int>;

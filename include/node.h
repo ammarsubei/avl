@@ -77,10 +77,10 @@ class Node
     /**
      *  @brief Updates height
      *
-     *  Used after adding a new node to update heights and
-     *  check if AVL condition was broken.
+     *  Used after adding or removing a node from tree.
+     *  Updates node heights and checks if AVL condition was broken.
      *
-     *  @return bool node is balanced
+     *  @return bool node subtree is balanced
      */
     bool updateHeight();
 
